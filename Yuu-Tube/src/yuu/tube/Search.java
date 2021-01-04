@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package yuu.tube;
 
 import java.sql.PreparedStatement;
@@ -13,10 +8,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author syaam
- */
 public class Search {
 
     public Search() {
@@ -25,11 +16,10 @@ public class Search {
     
     public void searchVid(String a){
         Scanner s=new Scanner(System.in);
-        a=s.nextLine();
         PreparedStatement st;
         ResultSet rs;
         String vidTitle=a;
-        String SQL="SELECT * FROM public.credentials WHERE title=? AND likes=? AND dislikes=? AND views=?";
+        String SQL="SELECT * FROM public.videostats WHERE title=? AND views=? AND likes=? AND dislikes=? AND views=?";
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             rs=st.executeQuery();

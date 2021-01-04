@@ -12,9 +12,9 @@ public class YuuTube {
         Scanner s = new Scanner(System.in);
         System.out.println("WELCOME TO YUUTUBE");
         
-        boolean status1=true, status2=true;
+        boolean status=true;
         firstlevel:
-        while(status1){
+        while(status){
             System.out.println("[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
             int userchoice1=s.nextInt();
@@ -25,7 +25,6 @@ public class YuuTube {
                     lgf.pack();
                     lgf.setLocationRelativeTo(null);
                     lgf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    status1=false;
                     break;
                
                 case 2:
@@ -34,7 +33,6 @@ public class YuuTube {
                     rgf.pack();
                     rgf.setLocationRelativeTo(null);
                     rgf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    status1=false;
                     break;
                     
                 case 3:
@@ -48,7 +46,7 @@ public class YuuTube {
             s.nextLine();
             s.nextLine();
             
-            while(status2){
+            while(status){
                 System.out.println("\n--HOME--");
                 System.out.println("[1] User Profile\n[2] Search\n[3] Quit");
                 System.out.print("What do you want to do today: ");
@@ -60,9 +58,13 @@ public class YuuTube {
                         break;
                 
                     case 2:
+                        Search d=new Search();
+                        System.out.print("Enter video title: ");
+                        d.searchVid(s.nextLine());
                         break;
                         
                     case 3:
+                        status=false;
                         break firstlevel;
                         
                     default:
@@ -70,8 +72,8 @@ public class YuuTube {
                         break;
                 }
             }
-            System.out.println("See you later!");
         }
+        System.out.println("See you later!");
     }
 }
 
