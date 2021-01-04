@@ -131,9 +131,9 @@ public class RegisterForm extends javax.swing.JFrame {
                             .addComponent(jRegRePassword)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonRegister, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelLogin, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelLogin)
+                            .addComponent(jButtonRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(11, 11, 11))
         );
         layout.setVerticalGroup(
@@ -175,7 +175,7 @@ public class RegisterForm extends javax.swing.JFrame {
         lgf.setVisible(true);
         lgf.pack();
         lgf.setLocationRelativeTo(null);
-        lgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        lgf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_jLabelLoginMouseClicked
 
@@ -210,7 +210,7 @@ public class RegisterForm extends javax.swing.JFrame {
             st.setString(3, password);
             
             if(st.executeUpdate()>0){
-                JOptionPane.showMessageDialog(null, "New User Added Successfully");
+                JOptionPane.showMessageDialog(null, "New User Added Successfully\nPlease return to login page");
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
