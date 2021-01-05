@@ -66,6 +66,7 @@ public class UserOps {
                     int c=s.nextInt();
                     if(c==1){
                         deleteAccount();
+                        System.out.println("Account deleted");
                     }else{
                         break;
                     }

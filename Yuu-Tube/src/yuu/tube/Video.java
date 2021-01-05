@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,10 +15,11 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Video {
-    private String vidTitle;
+    private String vidTitle, filename;
     private int vidViews, vidLikes, vidDislikes;
     private String[] vidComments;
-
+    private String fileDestination = "C:\\Users\\syaam\\Videos\\";
+    
     public Video() {
         this.vidTitle = null;
         this.vidViews = 0;
@@ -26,8 +28,32 @@ public class Video {
         this.vidComments = null;
     }
     
-    public void statsVideo(){
-        //System.out.print();
+    public void searchVid(){
+        Scanner s=new Scanner(System.in);
+        vidTitle=s.nextLine();
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        try{
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
+            st = conn.prepareStatement(SQL); 
+            st.setString(1, vidTitle);
+            rs = st.executeQuery();
+            if  (rs.next()) { 
+                String title = rs.getString("title");
+                int views = rs.getInt("views");
+                int likes = rs.getInt("likes");
+                int dislikes = rs.getInt("dislikes");
+                System.out.println("Title: "+title+
+                                   "\nViews: "+views+
+                                   "\nLikes: "+likes+
+                                   "\nDislikes: "+dislikes);
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
     //Method to upload a video
@@ -52,7 +78,7 @@ public class Video {
         
         try(
             FileInputStream fin = new FileInputStream(new File(sourceFilePath + "/" + outputFilePath));
-            FileOutputStream fout = new FileOutputStream(new File("E:\\Video Files\\" + outputFilePath));
+            FileOutputStream fout = new FileOutputStream(new File(fileDestination + outputFilePath));
             ){
             byte[] buffer = new byte[BUFFERSIZE];
             System.out.println("Upload completed");
@@ -80,21 +106,43 @@ public class Video {
             }
         } 
     
-        //Method to play video
-        public void playVideo(){
-        Scanner s = new Scanner(System.in);
-        System.out.print("Enter video name: ");
-        String chosenFile = s.nextLine();
-      
+    //Method to play video
+    public void playVideo(){
+        vidViews++;
+        int rowsAffected=0;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
         try{
-            File f = new File("E:\\Video Files\\" + chosenFile);
+            String SQL="UPDATE videostats "+"SET views = ?"+"WHERE title = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL);
+            st.setInt(1, vidViews);
+            st.setString(2, vidTitle);
+            rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        
+        try{
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
+            st = conn.prepareStatement(SQL);
+            st.setString(1, vidTitle);
+            rs = st.executeQuery();
+            if(rs.next()){
+                filename=rs.getString("filename");
+            }
+            File f = new File(fileDestination+filename);
             Desktop.getDesktop().open(f);
         } catch(IOException e1){
+        } catch (SQLException ex) {
+          Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-        }
+    }
     
-        //Method to delete video
-        public void deleteVideo(){
+    //Method to delete video
+    public void deleteVideo(){
         Scanner s =new Scanner(System.in);
         System.out.print("Enter name of video: ");
         String video = s.nextLine();
@@ -107,13 +155,12 @@ public class Video {
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error deleting in database");
-            }
-        File f = new File("E:\\Video Files\\" + video); 
+        }
+        File f = new File(fileDestination + video); 
         if (f.delete()) { 
             System.out.println("Video Deleted: " + f.getName());
         } else {
             System.out.println("Failed to delete the video");
         }
-        
     }
 }

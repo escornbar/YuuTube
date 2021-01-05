@@ -1,45 +1,52 @@
 package yuu.tube;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+
 
 public class Search {
-
-    public Search() {
-        
+    private String vidTitle;
+    
+    public void searchVid(){
+        Scanner s=new Scanner(System.in);
+        vidTitle=s.nextLine();
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        try{
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
+            st = conn.prepareStatement(SQL); 
+            st.setString(1, vidTitle);
+            rs = st.executeQuery();
+            if  (rs.next()) { 
+                String title = rs.getString("title");
+                int views = rs.getInt("views");
+                int likes = rs.getInt("likes");
+                int dislikes = rs.getInt("dislikes");
+                System.out.println("Title: "+title+
+                                   "\nViews: "+views+
+                                   "\nLikes: "+likes+
+                                   "\nDislikes: "+dislikes);
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
     
-    public void searchVid(String a){
-        Scanner s=new Scanner(System.in);
+    public void likeVideo(){
         PreparedStatement st;
-        ResultSet rs;
-        String vidTitle=a;
-        String SQL="SELECT * FROM public.videostats WHERE title=? AND views=? AND likes=? AND dislikes=? AND views=?";
+        String SQL="UPDATE videostats "+"SET likes = ?"+"WHERE title = ?";
+        int rowsAffected=0;
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
-            rs=st.executeQuery();
-            int i=0;
-            while(rs.next()){
-                i++;
-                System.out.println(i);
-                System.out.print("Video Title: ");
-                System.out.println(rs.getString("title"));
-                System.out.print("Views: ");
-                System.out.println(rs.getString("views"));
-                System.out.print("Likes: ");
-                System.out.println(rs.getInt("likes"));
-                System.out.print("Dislikes: ");
-                System.out.println(rs.getInt("dislikes"));
-                System.out.println("Comments:");
-            }
-               
+            st.setString(1, vidTitle);
+            rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(Search.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error updating to database");
             }
     }
 }

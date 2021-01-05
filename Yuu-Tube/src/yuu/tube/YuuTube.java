@@ -5,6 +5,7 @@ import java.util.*;
 import javax.swing.JFrame;
 import java.awt.Desktop;
 import java.io.*;
+import java.sql.SQLException;
 
 public class YuuTube {
        
@@ -13,12 +14,12 @@ public class YuuTube {
         System.out.println("WELCOME TO YUUTUBE");
         
         boolean status=true;
-        firstlevel:
+        main:
         while(status){
             System.out.println("[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
-            int userchoice1=s.nextInt();
-            switch(userchoice1){
+            int userchoiceMain=s.nextInt();
+            switch(userchoiceMain){
                 case 1:
                     LoginForm lgf=new LoginForm();
                     lgf.setVisible(true);
@@ -36,7 +37,7 @@ public class YuuTube {
                     break;
                     
                 case 3:
-                    break firstlevel;
+                    break main;
                     
                 default:
                     System.out.println("\nInvalid input\n");
@@ -50,22 +51,39 @@ public class YuuTube {
                 System.out.println("\n--HOME--");
                 System.out.println("[1] User Profile\n[2] Search\n[3] Quit");
                 System.out.print("What do you want to do today: ");
-                int userchoice2=s.nextInt();
-                switch(userchoice2){
+                int userchoiceHome=s.nextInt();
+                switch(userchoiceHome){
                     case 1:
                         UserOps c=new UserOps();
                         c.userProfile();
                         break;
                 
                     case 2:
-                        Search d=new Search();
-                        System.out.print("Enter video title: ");
-                        d.searchVid(s.nextLine());
+                        Video d=new Video();
+                        System.out.print("Search: ");
+                        d.searchVid();
+                        System.out.println("\n[1] Play video\n[2] Like\n[3] Dislike\n[4] Comment\n[5] Back to Home");
+                        int userchoiceVideo=s.nextInt();
+                        video:
+                        switch(userchoiceVideo){
+                            case 1:
+                                d.playVideo();
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                break;
+                            case 4:
+                                break;
+                            case 5:
+                                break video;
+                            
+                        }
                         break;
                         
                     case 3:
                         status=false;
-                        break firstlevel;
+                        break main;
                         
                     default:
                         System.out.println("Invalid input");
