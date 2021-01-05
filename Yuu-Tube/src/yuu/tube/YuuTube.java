@@ -49,7 +49,8 @@ public class YuuTube {
                     break main;
                     
                 default:
-                    System.out.println("\nInvalid input\n");
+                    System.out.print("\nInvalid input\n");
+                    break;
             }
         }
         System.out.println("\nSee you later!");
@@ -57,6 +58,9 @@ public class YuuTube {
     
     public static void home(){
         Scanner s = new Scanner(System.in);
+        Video a=new Video();
+        Search b=new Search();
+        UserOps c=new UserOps();            
         boolean status=true;
         while(status){
             System.out.println("\n--HOME--");
@@ -66,31 +70,32 @@ public class YuuTube {
             home:
             switch(userchoiceHome){
                 case 1:
-                    UserOps c=new UserOps();
                     c.userProfile();
                     break;
                 
                 case 2:
-                    Video d=new Video();
                     System.out.print("Search: ");
-                    d.searchVid();
+                    b.searchVid();
                     while(status){
                         System.out.println("\n[1] Play video\n[2] Like\n[3] Dislike\n[4] Comment\n[5] Back to Home");
                         int userchoiceVideo=s.nextInt();
                         switch(userchoiceVideo){
                             case 1:
-                                d.playVideo();
+                                a.playVideo();
                                 break;
                             case 2:
-                                d.likeVid();
+                                c.likeVid();
                                 break;
                             case 3:
-                                d.dislikeVid();
+                                c.dislikeVid();
                                 break;
                             case 4:
                                 break;
                             case 5:
                                 break home;
+                            default:
+                                System.out.println("Invalid input");
+                                break;
                         }
                     }
                     break;

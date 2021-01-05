@@ -165,7 +165,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        
     private void jRegEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRegEmailActionPerformed
@@ -184,6 +184,7 @@ public class RegisterForm extends javax.swing.JFrame {
         String username=jRegUsername.getText();
         String password=String.valueOf(jRegPassword.getPassword());
         String retypepassword=String.valueOf(jRegRePassword.getPassword());
+        int subscriberscount=0, videoscount=0;
         
         if(email.equals("")){
             JOptionPane.showMessageDialog(null, "Email cannot be blank");
@@ -202,13 +203,14 @@ public class RegisterForm extends javax.swing.JFrame {
         }
         else{      
         PreparedStatement st;
-        String SQL="INSERT INTO credentials(email, username, password)"+"values(?,?,?)";
+        String SQL="INSERT INTO credentials(email, username, password, subscriberscount, videoscount)"+"values(?,?,?,?,?)";
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             st.setString(1, email);
             st.setString(2, username);
             st.setString(3, password);
-            
+            st.setInt(4, subscriberscount);
+            st.setInt(5, videoscount);
             if(st.executeUpdate()>0){
                 JOptionPane.showMessageDialog(null, "New User Added Successfully\nPlease return to login page");
             }

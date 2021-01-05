@@ -14,10 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Video {
-    private String vidTitle, filename;
-    private int vidViews, vidLikes, vidDislikes;
-    private String[] vidComments;
-    private String fileDestination = "C:\\Users\\syaam\\Videos\\";
+    static String vidTitle, filename;
+    static int vidViews, vidLikes, vidDislikes;
+    static String[] vidComments;
+    private static String fileDestination = "C:\\Video Files\\";
     
     public Video() {
         this.vidTitle = null;
@@ -27,37 +27,9 @@ public class Video {
         this.vidComments = null;
     }
     
-    public void searchVid(){
-        Scanner s=new Scanner(System.in);
-        vidTitle=s.nextLine();
-        MyConnection connection=new MyConnection();
-        Connection conn = null; 
-        PreparedStatement st = null; 
-        ResultSet rs = null;
-        conn = connection.getConnection();
-        try{
-            String SQL="SELECT * FROM public.videostats WHERE title=?";
-            st = conn.prepareStatement(SQL); 
-            st.setString(1, vidTitle);
-            rs = st.executeQuery();
-            if  (rs.next()) { 
-                String title = rs.getString("title");
-                int views = rs.getInt("views");
-                int likes = rs.getInt("likes");
-                int dislikes = rs.getInt("dislikes");
-                System.out.println("Title: "+title+
-                                   "\nViews: "+views+
-                                   "\nLikes: "+likes+
-                                   "\nDislikes: "+dislikes);
-            } 
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
-    
     //Method to upload a video
-    public void uploadVideo(){
-        File f = new File("E:\\Video Files\\");
+    public static void uploadVideo(){
+        File f = new File("C:\\Video Files\\");
         if(!f.exists()){
             f.mkdir();
         }
@@ -106,7 +78,7 @@ public class Video {
         } 
     
     //Method to play video
-    public void playVideo(){
+    public static void playVideo(){
         vidViews++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
@@ -141,7 +113,7 @@ public class Video {
     }
     
     //Method to delete video
-    public void deleteVideo(){
+    public static void deleteVideo(){
         Scanner s =new Scanner(System.in);
         System.out.print("Enter name of video: ");
         String video = s.nextLine();
@@ -161,71 +133,5 @@ public class Video {
         } else {
             System.out.println("Failed to delete the video");
         }
-    }
-    
-    public void likeVid(){
-        vidLikes++;
-        int rowsAffected=0;
-        MyConnection connection=new MyConnection();
-        Connection conn = null; 
-        PreparedStatement st = null; 
-        ResultSet rs = null;
-        conn = connection.getConnection();
-        try{
-            String SQL="UPDATE videostats "+"SET likes = ?"+"WHERE title = ?";
-            st=MyConnection.getConnection().prepareStatement(SQL);
-            st.setInt(1, vidLikes);
-            st.setString(2, vidTitle);
-            rowsAffected = st.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("Error updating to database");
-            }
-        showVidStats();
-    }
-    
-    public void dislikeVid(){
-        vidDislikes++;
-        int rowsAffected=0;
-        MyConnection connection=new MyConnection();
-        Connection conn = null; 
-        PreparedStatement st = null; 
-        ResultSet rs = null;
-        conn = connection.getConnection();
-        try{
-            String SQL="UPDATE videostats "+"SET dislikes = ?"+"WHERE title = ?";
-            st=MyConnection.getConnection().prepareStatement(SQL);
-            st.setInt(1, vidDislikes);
-            st.setString(2, vidTitle);
-            rowsAffected = st.executeUpdate();
-        } catch (SQLException ex) {
-            System.out.println("Error updating to database");
-            }
-        showVidStats();
-    }
-    
-    public void showVidStats(){
-        MyConnection connection=new MyConnection();
-        Connection conn = null; 
-        PreparedStatement st = null; 
-        ResultSet rs = null;
-        conn = connection.getConnection();
-        try{
-            String SQL="SELECT * FROM public.videostats WHERE title=?";
-            st = conn.prepareStatement(SQL); 
-            st.setString(1, vidTitle);
-            rs = st.executeQuery();
-            if  (rs.next()) { 
-                String title = rs.getString("title");
-                int views = rs.getInt("views");
-                int likes = rs.getInt("likes");
-                int dislikes = rs.getInt("dislikes");
-                System.out.println("Title: "+title+
-                                   "\nViews: "+views+
-                                   "\nLikes: "+likes+
-                                   "\nDislikes: "+dislikes);
-            } 
-        } catch (SQLException ex) {
-            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
-            }
     }
 }
