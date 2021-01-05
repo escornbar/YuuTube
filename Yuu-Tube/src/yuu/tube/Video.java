@@ -15,18 +15,20 @@ import java.util.logging.Logger;
 
 public class Video {
     static String vidTitle, filename;
-    static int vidViews, vidLikes, vidDislikes;
-    static String[] vidComments;
+    static int vidLikes, vidDislikes;
+    static String vidComments;
+    static int vidViews;
     private static String fileDestination = "C:\\Video Files\\";
-    
+
     public Video() {
-        this.vidTitle = null;
-        this.vidViews = 0;
-        this.vidLikes = 0;
-        this.vidDislikes = 0;
-        this.vidComments = null;
+        this.vidLikes=0;
+        this.vidDislikes=0;
+        this.vidViews=0;
+        this.vidTitle=null;
+        this.filename=null;
+        this.vidComments=null;
     }
-    
+
     //Method to upload a video
     public static void uploadVideo(){
         File f = new File("C:\\Video Files\\");

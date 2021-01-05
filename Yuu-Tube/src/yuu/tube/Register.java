@@ -17,8 +17,12 @@ import javax.swing.JOptionPane;
  * @author syaam
  */
 public class Register {
-    private String email, password, retypepassword, username;
-
+    static String email, password, retypepassword, username;
+    
+    public Register() {
+        this.email=email;
+    }
+    /*
     public String getUsername() {
         return username;
     }
@@ -72,5 +76,7 @@ public class Register {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    }*/
+
+    
 }

@@ -5,17 +5,25 @@ import java.util.*;
 import javax.swing.JFrame;
 import java.awt.Desktop;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static yuu.tube.Video.*;
+import static yuu.tube.Search.*;
+import static yuu.tube.UserOps.*;
 
 public class YuuTube {
        
     public static void main(String[] args){
         Scanner s = new Scanner(System.in);
-        System.out.println("WELCOME TO YUUTUBE");
-        
         boolean status=true;
+        
         main:
         while(status){
+            System.out.println("WELCOME TO YUUTUBE");
             System.out.println("\n[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
             int userchoiceMain=s.nextInt();
@@ -45,7 +53,8 @@ public class YuuTube {
                     break;
                     
                 case 3:
-                    status=false;
+                    System.out.println("\nSee you later!");
+                    System.exit(0);
                     break main;
                     
                 default:
@@ -53,14 +62,10 @@ public class YuuTube {
                     break;
             }
         }
-        System.out.println("\nSee you later!");
     }
     
     public static void home(){
         Scanner s = new Scanner(System.in);
-        Video a=new Video();
-        Search b=new Search();
-        UserOps c=new UserOps();            
         boolean status=true;
         while(status){
             System.out.println("\n--HOME--");
@@ -70,35 +75,22 @@ public class YuuTube {
             home:
             switch(userchoiceHome){
                 case 1:
-                    c.userProfile();
+                    userProfile();
                     break;
                 
                 case 2:
-                    System.out.print("Search: ");
-                    b.searchVid();
+                    searchVid();
                     while(status){
-                        System.out.println("\n[1] Play video\n[2] Like\n[3] Dislike\n[4] Comment\n[5] Back to Home");
-                        int userchoiceVideo=s.nextInt();
-                        switch(userchoiceVideo){
-                            case 1:
-                                a.playVideo();
-                                break;
-                            case 2:
-                                c.likeVid();
-                                break;
-                            case 3:
-                                c.dislikeVid();
-                                break;
-                            case 4:
-                                break;
-                            case 5:
-                                break home;
-                            default:
-                                System.out.println("Invalid input");
-                                break;
-                        }
-                    }
-                    break;
+                    System.out.print("\nEnter video title or enter 'home' to go back: ");
+                    s.nextLine();
+                    String option=s.nextLine();
+                    chosenVid(option);
+                    if(option.equalsIgnoreCase("home")){
+                        break home;
+                    }else{
+                        System.out.println("Invalid input");
+                        break;
+                    }}
                         
                 case 3:
                 status=false;

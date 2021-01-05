@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
+//import yuu.tube.Register.email;
 /**
  *
  * @author syaam
@@ -165,7 +165,7 @@ public class RegisterForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        
+    static String email, password, retypepassword, username; 
     private void jRegEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRegEmailActionPerformed
@@ -180,10 +180,10 @@ public class RegisterForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelLoginMouseClicked
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        String email=jRegEmail.getText();
-        String username=jRegUsername.getText();
-        String password=String.valueOf(jRegPassword.getPassword());
-        String retypepassword=String.valueOf(jRegRePassword.getPassword());
+        email=jRegEmail.getText();
+        username=jRegUsername.getText();
+        password=String.valueOf(jRegPassword.getPassword());
+        retypepassword=String.valueOf(jRegRePassword.getPassword());
         int subscriberscount=0, videoscount=0;
         
         if(email.equals("")){

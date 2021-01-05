@@ -7,13 +7,12 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static yuu.tube.Video.vidDislikes;
-import static yuu.tube.Video.vidLikes;
-import static yuu.tube.Video.vidTitle;
+import static yuu.tube.Video.*;
+import static yuu.tube.RegisterForm.*;
 
 public class UserOps {
     
-    public void userProfile(){
+    public static void userProfile(){
         Scanner s = new Scanner(System.in);
         Video a=new Video();
         
@@ -25,7 +24,7 @@ public class UserOps {
         conn = connection.getConnection();
         while(status){
             System.out.println("\n--USER PROFILE-");
-            /*try{
+            try{
                 String SQL="SELECT * FROM public.credentials WHERE username=?";
                 st = conn.prepareStatement(SQL); 
                 st.setString(1, username);
@@ -39,7 +38,7 @@ public class UserOps {
                 } 
             } catch (SQLException ex) {
                 Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
-                }*/
+                }
             System.out.println("[1] Upload Video\n[2] Delete Video\n[3] User Settings\n[4] Return to home");
             System.out.print("What do you want to do today: ");
             int userchoice3=s.nextInt();
@@ -65,7 +64,7 @@ public class UserOps {
         }
     }
     
-    public void userSettings(){
+    public static void userSettings(){
         Scanner s = new Scanner(System.in);
         Video a=new Video();
         
@@ -103,7 +102,7 @@ public class UserOps {
         }
     }
     
-    public void changeEmail(){
+    public static void changeEmail(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your password: ");
         String password=s.nextLine();
@@ -122,7 +121,7 @@ public class UserOps {
             }
     }
     
-    public void changePassword(){
+    public static void changePassword(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your email: ");
         String email=s.nextLine();
@@ -141,7 +140,7 @@ public class UserOps {
             }
     } 
     
-    public void changeUsername(){
+    public static void changeUsername(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your password: ");
         String password=s.nextLine();
@@ -160,7 +159,7 @@ public class UserOps {
             }
     }
     
-    public void deleteAccount(){
+    public static void deleteAccount(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your email: ");
         String email=s.nextLine();
@@ -176,7 +175,7 @@ public class UserOps {
             }
     }
     
-    public void likeVid(){
+    public static void likeVid(){
         vidLikes++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
@@ -196,7 +195,7 @@ public class UserOps {
         showVidStats();
     }
     
-    public void dislikeVid(){
+    public static void dislikeVid(){
         vidDislikes++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
@@ -216,7 +215,7 @@ public class UserOps {
         showVidStats();
     }
     
-    public void showVidStats(){
+    public static void showVidStats(){
         MyConnection connection=new MyConnection();
         Connection conn = null; 
         PreparedStatement st = null; 
