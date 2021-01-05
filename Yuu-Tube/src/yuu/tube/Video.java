@@ -123,7 +123,7 @@ public class Video {
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
-        vidViews--;
+        
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st = conn.prepareStatement(SQL);
@@ -180,7 +180,7 @@ public class Video {
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
-        vidLikes--;
+        showVidStats();
     }
     
     public void dislikeVid(){
@@ -200,10 +200,32 @@ public class Video {
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
-        vidDislikes--;
+        showVidStats();
     }
     
     public void showVidStats(){
-        
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        try{
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
+            st = conn.prepareStatement(SQL); 
+            st.setString(1, vidTitle);
+            rs = st.executeQuery();
+            if  (rs.next()) { 
+                String title = rs.getString("title");
+                int views = rs.getInt("views");
+                int likes = rs.getInt("likes");
+                int dislikes = rs.getInt("dislikes");
+                System.out.println("Title: "+title+
+                                   "\nViews: "+views+
+                                   "\nLikes: "+likes+
+                                   "\nDislikes: "+dislikes);
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 }
