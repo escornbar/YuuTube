@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class Video {
     private String vidTitle, filename;
@@ -124,7 +123,7 @@ public class Video {
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
-        
+        vidViews--;
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st = conn.prepareStatement(SQL);
@@ -162,5 +161,49 @@ public class Video {
         } else {
             System.out.println("Failed to delete the video");
         }
+    }
+    
+    public void likeVid(){
+        vidLikes++;
+        int rowsAffected=0;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        try{
+            String SQL="UPDATE videostats "+"SET likes = ?"+"WHERE title = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL);
+            st.setInt(1, vidLikes);
+            st.setString(2, vidTitle);
+            rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        vidLikes--;
+    }
+    
+    public void dislikeVid(){
+        vidDislikes++;
+        int rowsAffected=0;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        try{
+            String SQL="UPDATE videostats "+"SET dislikes = ?"+"WHERE title = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL);
+            st.setInt(1, vidDislikes);
+            st.setString(2, vidTitle);
+            rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        vidDislikes--;
+    }
+    
+    public void showVidStats(){
+        
     }
 }
