@@ -1,23 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package yuu.tube;
 
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import static yuu.tube.Video.*;
-import static yuu.tube.YuuTube.*;
 import static yuu.tube.UserOps.*;
-import static yuu.tube.RegisterForm.*;
 
-/**
- *
- * @author syaam
- */
 public class Search {
     static String username1;
     
@@ -54,7 +42,7 @@ public class Search {
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
             }
-        System.out.print("\nEnter video title or enter 'home' to go back: ");
+        System.out.print("\nEnter chosen video title or enter 'home' to go back: ");
         String option=s.nextLine();
         chosenVid(option);
     }
@@ -75,9 +63,10 @@ public class Search {
             rs = st.executeQuery();
             if  (rs.next()) { 
                 String filename = rs.getString("filename");
-                out:
+                video:
                 while(status1){
                         System.out.println("\n[1] Play Video\n[2] Like\n[3] Dislike\n[4] Comment\n[5] Back to home");
+                        System.out.print("Your choice: ");
                         int userchoiceVideo=s.nextInt();
                         switch(userchoiceVideo){
                             case 1:
@@ -93,7 +82,7 @@ public class Search {
                                 commentVid();
                                 break;
                             case 5:
-                                break out;
+                                break video;
                             default:
                                 System.out.println("Invalid input");
                                 break;
@@ -109,12 +98,12 @@ public class Search {
         Scanner s=new Scanner(System.in);
         System.out.print("Enter channel name: ");
         username1=s.nextLine();
+        boolean status=true;
         MyConnection connection=new MyConnection();
         Connection conn = null; 
         PreparedStatement st = null; 
         ResultSet rs = null;
         conn = connection.getConnection();
-        boolean flag=true;
         try{
             String SQL="SELECT * FROM public.credentials WHERE username=?";
             st = conn.prepareStatement(SQL); 
@@ -128,14 +117,21 @@ public class Search {
                 System.out.println("Channel: "+uname+
                                    "\nSubscribers: "+subscribers+
                                    "\nVideos: "+videos);
-                System.out.println("\n[1] Subscribe\n[2] Back to home");
-                int choice=s.nextInt();
-                    if(choice==1){
-                        subscribeUser();
-                    }else{
-                        home();
+                subscribe:
+                while(status){
+                    System.out.println("\n[1] Subscribe\n[2] Back to home");
+                    System.out.print("Your choice: ");
+                    int choice=s.nextInt();
+                    switch(choice){
+                        case 1:
+                            subscribeUser();
+                        case 2:
+                            break subscribe;
+                        default:
+                            System.out.println("Invalid input");
                     }
-            }else{
+                }
+            } else{
                 System.out.println("Cannot find channel");
             }
         } catch (SQLException ex) {

@@ -155,7 +155,7 @@ public class LoginForm extends javax.swing.JFrame {
             st.setString(3, password);
             rs=st.executeQuery();
             if(rs.next()){
-                JOptionPane.showMessageDialog(null,"Login Successful");
+                JOptionPane.showMessageDialog(null,"Login Successful\nWelcome back "+username+"!");
             }
             else{
                 JOptionPane.showMessageDialog(null,"Wrong email or password entered");

@@ -1,10 +1,11 @@
 package yuu.tube;
 
-
 import java.util.*;
 import javax.swing.JFrame;
 import static yuu.tube.Search.*;
 import static yuu.tube.UserOps.*;
+import static yuu.tube.Trending.*;
+import static yuu.tube.RegisterForm.*;
 
 public class YuuTube {
        
@@ -14,7 +15,17 @@ public class YuuTube {
         
         main:
         while(status){
-            System.out.println("\nWELCOME TO YUUTUBE");
+            //System.out.println("\nWELCOME TO YUUTUBE");
+            System.out.println("");
+            System.out.println("****   ****  ****  ****  ****  ****  ************  ****  ****  *******    ************");
+            System.out.println(" *  * *  *   *  *  *  *  *  *  *  *  *****  *****  *  *  *  *  *  * *  *  *  *********");
+            System.out.println("  *  *  *    *  *  *  *  *  *  *  *      *  *      *  *  *  *  *  * *  *  *  *       ");
+            System.out.println("   *   *     *  *  *  *  *  *  *  *      *  *      *  *  *  *  *      *   *  ******");
+            System.out.println("    * *      *  *  *  *  *  *  *  *      *  *      *  *  *  *  *      *   *  ******");
+            System.out.println("    * *      *  *  *  *  *  *  *  *      *  *      *  *  *  *  *  * *  *  *  *");
+            System.out.println("    * *      *  ****  *  *  ****  *      *  *      *  ****  *  *  * *  *  *  *********");
+            System.out.println("    ***      **********  **********      ****      **********  *******    ************");
+            trendingVideos();
             System.out.println("\n[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
             int userchoiceMain=s.nextInt();
@@ -44,7 +55,6 @@ public class YuuTube {
                     break;
                     
                 case 3:
-                    System.out.println("\nSee you later!");
                     System.exit(0);
                     break main;
                     
@@ -79,6 +89,7 @@ public class YuuTube {
                     break;
                 
                 case 4:
+                    System.out.println("See you later, "+username+"!");
                     break main;
                     
                 default:

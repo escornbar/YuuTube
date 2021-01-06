@@ -1,17 +1,10 @@
 package yuu.tube;
 
 import java.awt.Desktop;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import static yuu.tube.UserOps.*;
 import static yuu.tube.RegisterForm.*;
 
@@ -33,6 +26,7 @@ public class Video {
 
     //Method to upload a video
     public static void uploadVideo(){
+        boolean flag1=true;
         File f = new File("C:\\Video Files\\");
         if(!f.exists()){
             f.mkdir();
@@ -60,11 +54,14 @@ public class Video {
             while(fin.available() != 0) {
                 fin.read(buffer);
                 fout.write(buffer);
-            } 
+            }
+            
         } catch(Exception e) {
             System.out.println("Something went wrong! Reason: " + e.getMessage());
+            flag1=false;
             }
         
+        if(flag1==true){
         PreparedStatement st;
         MyConnection connection=new MyConnection();
         Connection conn = null; 
@@ -90,8 +87,8 @@ public class Video {
             st.setString(1, username);
             rs=st.executeQuery();
             if(rs.next()) {
-                vids=rs.getInt("videoscount");}
-            //rowsAffected = st.executeUpdate();
+                vids=rs.getInt("videoscount");
+            }
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
@@ -106,7 +103,7 @@ public class Video {
             System.out.println("Error updating to database");
             }
         }
-    
+    }
     
     //Method to play video
     public static void playVideo(){

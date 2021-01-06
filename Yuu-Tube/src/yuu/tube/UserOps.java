@@ -2,8 +2,7 @@ package yuu.tube;
 
 import java.sql.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import static yuu.tube.Video.*;
 import static yuu.tube.RegisterForm.*;
 import static yuu.tube.Search.*;
@@ -315,4 +314,7 @@ public class UserOps {
         showVidStats();
     }
     
+    public static void showUserStats(){
+        
+    }
 }
