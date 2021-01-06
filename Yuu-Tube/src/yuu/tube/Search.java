@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import static yuu.tube.Video.*;
 import static yuu.tube.YuuTube.*;
 import static yuu.tube.UserOps.*;
+import static yuu.tube.RegisterForm.*;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Search {
             st = conn.prepareStatement(SQL); 
             st.setString(1, "%"+vidTitle+"%");
             rs = st.executeQuery();
-            for(int i=0;i<6;i++){
+            for(int i=0;i<5;i++){
                 if  (rs.next()) {
                     System.out.println("");
                     System.out.println(i+1+".");
@@ -48,7 +49,10 @@ public class Search {
                                        "\nViews: "+views+
                                        "\nLikes: "+likes+
                                        "\nDislikes: "+dislikes);
-                } 
+                }else{
+                    System.out.println("Video not found");
+                    home();
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,6 +99,44 @@ public class Search {
                         }
                     }
             } 
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    public static void searchChannel(){
+        Scanner s=new Scanner(System.in);
+        System.out.print("Enter channel name: ");
+        username=s.nextLine();
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        boolean flag=true;
+        try{
+            String SQL="SELECT * FROM public.credentials WHERE username=?";
+            st = conn.prepareStatement(SQL); 
+            st.setString(1, username);
+            rs = st.executeQuery();
+            if  (rs.next()) {
+                System.out.println("");
+                String uname = rs.getString("username");
+                int subscribers = rs.getInt("subscriberscount");
+                int videos = rs.getInt("videoscount");
+                System.out.println("Channel: "+uname+
+                                   "\nSubscribers: "+subscribers+
+                                   "\nVideos: "+videos);
+                System.out.println("\n[1] Subscribe\n[2] Back to home");
+                int choice=s.nextInt();
+                    if(choice==1){
+                        subscribeUser();
+                    }else{
+                        home();
+                    }
+            }else{
+                System.out.println("Cannot find channel");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
             }

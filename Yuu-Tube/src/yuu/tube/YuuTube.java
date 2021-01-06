@@ -3,15 +3,6 @@ package yuu.tube;
 
 import java.util.*;
 import javax.swing.JFrame;
-import java.awt.Desktop;
-import java.io.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static yuu.tube.Video.*;
 import static yuu.tube.Search.*;
 import static yuu.tube.UserOps.*;
 
@@ -69,7 +60,7 @@ public class YuuTube {
         boolean status=true;
         while(status){
             System.out.println("\n--HOME--");
-            System.out.println("[1] User Profile\n[2] Search\n[3] Logout");
+            System.out.println("[1] User Profile\n[2] Search a Video\n[3] Search a Channel\n[4] Logout");
             System.out.print("What do you want to do today: ");
             int userchoiceHome=s.nextInt();
             home:
@@ -93,9 +84,14 @@ public class YuuTube {
                     }}
                         
                 case 3:
-                status=false;
-                break;
-                        
+                    searchChannel();
+                    //System.out.println("Subscribe?");
+                    break;
+                
+                case 4:
+                    status=false;
+                    break;
+                    
                 default:
                 System.out.println("Invalid input");
                 break;

@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static yuu.tube.UserOps.*;
+import static yuu.tube.RegisterForm.*;
 
 public class Video {
     static String vidTitle, filename;
@@ -77,7 +79,23 @@ public class Video {
             } catch (SQLException ex) {
             System.out.println("Error in uploading to database");
             }
-        } 
+        
+        vids++;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
+        try{
+            String SQL2="UPDATE credentials "+"SET videoscount = ?"+"WHERE username = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL2);
+            st.setInt(1, vids);
+            st.setString(2, username);
+            rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        }
+    
     
     //Method to play video
     public static void playVideo(){

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package yuu.tube;
 
 import java.sql.*;
@@ -10,11 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-//import yuu.tube.Register.email;
-/**
- *
- * @author syaam
- */
+
 public class RegisterForm extends javax.swing.JFrame {
 
     /**

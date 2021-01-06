@@ -11,6 +11,7 @@ import static yuu.tube.Video.*;
 import static yuu.tube.RegisterForm.*;
 
 public class UserOps {
+    static int subs=0, vids=0;
     
     public static void userProfile(){
         Scanner s = new Scanner(System.in);
@@ -201,7 +202,6 @@ public class UserOps {
         MyConnection connection=new MyConnection();
         Connection conn = null; 
         PreparedStatement st = null; 
-        ResultSet rs = null;
         conn = connection.getConnection();
         try{
             String SQL="UPDATE videostats "+"SET dislikes = ?"+"WHERE title = ?";
@@ -238,6 +238,24 @@ public class UserOps {
             } 
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
+    
+    public static void subscribeUser(){
+        subs++;
+        int rowsAffected=0;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null; 
+        conn = connection.getConnection();
+        try{
+            String SQL="UPDATE credentials "+"SET subscriberscount = ?"+"WHERE username = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL);
+            st.setInt(1, subs);
+            st.setString(2, username);
+            rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
             }
     }
 }
