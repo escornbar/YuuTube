@@ -66,6 +66,10 @@ public class Video {
             }
         
         PreparedStatement st;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        ResultSet rs = null;
+        conn = connection.getConnection();
         int rowsAffected=0;
         String SQL="INSERT INTO videostats(title, likes, dislikes, views, filename)"+"values(?,?,?,?,?)";
         try{
@@ -80,15 +84,22 @@ public class Video {
             System.out.println("Error in uploading to database");
             }
         
-        vids++;
-        MyConnection connection=new MyConnection();
-        Connection conn = null; 
-        ResultSet rs = null;
-        conn = connection.getConnection();
         try{
-            String SQL2="UPDATE credentials "+"SET videoscount = ?"+"WHERE username = ?";
+            String SQL2="SELECT * FROM public.credentials WHERE username=?";
             st=MyConnection.getConnection().prepareStatement(SQL2);
-            st.setInt(1, vids);
+            st.setString(1, username);
+            rs=st.executeQuery();
+            if(rs.next()) {
+                vids=rs.getInt("videoscount");}
+            //rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        
+        try{
+            String SQL3="UPDATE credentials "+"SET videoscount = ?"+"WHERE username = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL3);
+            st.setInt(1, vids+1);
             st.setString(2, username);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
@@ -99,7 +110,6 @@ public class Video {
     
     //Method to play video
     public static void playVideo(){
-        vidViews++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
         Connection conn = null; 
@@ -107,9 +117,21 @@ public class Video {
         ResultSet rs = null;
         conn = connection.getConnection();
         try{
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
+            st=MyConnection.getConnection().prepareStatement(SQL);
+            st.setString(1, vidTitle);
+            rs=st.executeQuery();
+            if(rs.next()){
+                vidViews=rs.getInt("views");}
+            //rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        
+        try{
             String SQL="UPDATE videostats "+"SET views = ?"+"WHERE title = ?";
             st=MyConnection.getConnection().prepareStatement(SQL);
-            st.setInt(1, vidViews);
+            st.setInt(1, vidViews+1);
             st.setString(2, vidTitle);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {

@@ -5,11 +5,8 @@
  */
 package yuu.tube;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static yuu.tube.Video.*;
@@ -22,6 +19,7 @@ import static yuu.tube.RegisterForm.*;
  * @author syaam
  */
 public class Search {
+    static String username1;
     
     public static void searchVid(){
         Scanner s=new Scanner(System.in);
@@ -45,18 +43,20 @@ public class Search {
                     int views = rs.getInt("views");
                     int likes = rs.getInt("likes");
                     int dislikes = rs.getInt("dislikes");
+                    String comment = rs.getString("comments");
                     System.out.println("Title: "+title+
                                        "\nViews: "+views+
                                        "\nLikes: "+likes+
-                                       "\nDislikes: "+dislikes);
-                }else{
-                    System.out.println("Video not found");
-                    home();
+                                       "\nDislikes: "+dislikes+
+                                       "\nComment: "+comment);
                 }
-            }
+            }    
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
             }
+        System.out.print("\nEnter video title or enter 'home' to go back: ");
+        String option=s.nextLine();
+        chosenVid(option);
     }
     
     public static void chosenVid(String title){
@@ -66,7 +66,7 @@ public class Search {
         PreparedStatement st = null; 
         ResultSet rs = null;
         conn = connection.getConnection();
-        boolean status=true;
+        boolean status1=true;
         vidTitle=title;
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
@@ -75,7 +75,8 @@ public class Search {
             rs = st.executeQuery();
             if  (rs.next()) { 
                 String filename = rs.getString("filename");
-                while(status){
+                out:
+                while(status1){
                         System.out.println("\n[1] Play Video\n[2] Like\n[3] Dislike\n[4] Comment\n[5] Back to home");
                         int userchoiceVideo=s.nextInt();
                         switch(userchoiceVideo){
@@ -89,10 +90,10 @@ public class Search {
                                 dislikeVid();
                                 break;
                             case 4:
+                                commentVid();
                                 break;
                             case 5:
-                                home();
-                                break;
+                                break out;
                             default:
                                 System.out.println("Invalid input");
                                 break;
@@ -107,7 +108,7 @@ public class Search {
     public static void searchChannel(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter channel name: ");
-        username=s.nextLine();
+        username1=s.nextLine();
         MyConnection connection=new MyConnection();
         Connection conn = null; 
         PreparedStatement st = null; 
@@ -117,7 +118,7 @@ public class Search {
         try{
             String SQL="SELECT * FROM public.credentials WHERE username=?";
             st = conn.prepareStatement(SQL); 
-            st.setString(1, username);
+            st.setString(1, username1);
             rs = st.executeQuery();
             if  (rs.next()) {
                 System.out.println("");

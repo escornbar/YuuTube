@@ -1,14 +1,12 @@
 package yuu.tube;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Scanner;
+import java.sql.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static yuu.tube.Video.*;
 import static yuu.tube.RegisterForm.*;
+import static yuu.tube.Search.*;
 
 public class UserOps {
     static int subs=0, vids=0;
@@ -177,7 +175,6 @@ public class UserOps {
     }
     
     public static void likeVid(){
-        vidLikes++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
         Connection conn = null; 
@@ -185,9 +182,21 @@ public class UserOps {
         ResultSet rs = null;
         conn = connection.getConnection();
         try{
-            String SQL="UPDATE videostats "+"SET likes = ?"+"WHERE title = ?";
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
             st=MyConnection.getConnection().prepareStatement(SQL);
-            st.setInt(1, vidLikes);
+            st.setString(1, vidTitle);
+            rs=st.executeQuery();
+            if(rs.next()) {   
+                vidLikes=rs.getInt("likes");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+                
+        try{
+            String SQL2="UPDATE videostats "+"SET likes = ?"+"WHERE title = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL2);
+            st.setInt(1, vidLikes+1);
             st.setString(2, vidTitle);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
@@ -197,16 +206,28 @@ public class UserOps {
     }
     
     public static void dislikeVid(){
-        vidDislikes++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
         Connection conn = null; 
-        PreparedStatement st = null; 
+        PreparedStatement st = null;
+        ResultSet rs = null;
         conn = connection.getConnection();
         try{
-            String SQL="UPDATE videostats "+"SET dislikes = ?"+"WHERE title = ?";
+            String SQL="SELECT * FROM public.videostats WHERE title=?";
             st=MyConnection.getConnection().prepareStatement(SQL);
-            st.setInt(1, vidDislikes);
+            st.setString(1, vidTitle);
+            rs=st.executeQuery();
+            if(rs.next()) {
+                vidDislikes=rs.getInt("dislikes");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        
+        try{
+            String SQL2="UPDATE videostats "+"SET dislikes = ?"+"WHERE title = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL2);
+            st.setInt(1, vidDislikes+1);
             st.setString(2, vidTitle);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
@@ -231,10 +252,12 @@ public class UserOps {
                 int views = rs.getInt("views");
                 int likes = rs.getInt("likes");
                 int dislikes = rs.getInt("dislikes");
+                String comment = rs.getString("comments");
                 System.out.println("Title: "+title+
                                    "\nViews: "+views+
                                    "\nLikes: "+likes+
-                                   "\nDislikes: "+dislikes);
+                                   "\nDislikes: "+dislikes+
+                                   "\nComment: "+comment);
             } 
         } catch (SQLException ex) {
             Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,20 +265,54 @@ public class UserOps {
     }
     
     public static void subscribeUser(){
-        subs++;
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
         Connection conn = null; 
         PreparedStatement st = null; 
+        ResultSet rs = null;
         conn = connection.getConnection();
+        try{
+            String SQL="SELECT * FROM public.credentials WHERE username=?";
+            st=MyConnection.getConnection().prepareStatement(SQL);
+            st.setString(1, username1);
+            rs=st.executeQuery();
+            if(rs.next()) {
+                subs=rs.getInt("subscriberscount");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        
         try{
             String SQL="UPDATE credentials "+"SET subscriberscount = ?"+"WHERE username = ?";
             st=MyConnection.getConnection().prepareStatement(SQL);
-            st.setInt(1, subs);
-            st.setString(2, username);
+            st.setInt(1, subs+1);
+            st.setString(2, username1);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
     }
+    
+    public static void commentVid(){
+        Scanner s=new Scanner(System.in);
+        int rowsAffected=0;
+        MyConnection connection=new MyConnection();
+        Connection conn = null; 
+        PreparedStatement st = null;
+        conn = connection.getConnection();
+        System.out.print("Enter your comment: ");
+        vidComments=s.nextLine();
+        try{
+            String SQL2="UPDATE videostats "+"SET comments = ?"+"WHERE title = ?";
+            st=MyConnection.getConnection().prepareStatement(SQL2);
+            st.setString(1, vidComments);
+            st.setString(2, vidTitle);
+            rowsAffected = st.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error updating to database");
+            }
+        showVidStats();
+    }
+    
 }

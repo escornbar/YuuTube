@@ -14,7 +14,7 @@ public class YuuTube {
         
         main:
         while(status){
-            System.out.println("WELCOME TO YUUTUBE");
+            System.out.println("\nWELCOME TO YUUTUBE");
             System.out.println("\n[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
             int userchoiceMain=s.nextInt();
@@ -58,6 +58,7 @@ public class YuuTube {
     public static void home(){
         Scanner s = new Scanner(System.in);
         boolean status=true;
+        main:
         while(status){
             System.out.println("\n--HOME--");
             System.out.println("[1] User Profile\n[2] Search a Video\n[3] Search a Channel\n[4] Logout");
@@ -71,26 +72,14 @@ public class YuuTube {
                 
                 case 2:
                     searchVid();
-                    while(status){
-                    System.out.print("\nEnter video title or enter 'home' to go back: ");
-                    s.nextLine();
-                    String option=s.nextLine();
-                    chosenVid(option);
-                    if(option.equalsIgnoreCase("home")){
-                        break home;
-                    }else{
-                        System.out.println("Invalid input");
-                        break;
-                    }}
+                    break;
                         
                 case 3:
                     searchChannel();
-                    //System.out.println("Subscribe?");
                     break;
                 
                 case 4:
-                    status=false;
-                    break;
+                    break main;
                     
                 default:
                 System.out.println("Invalid input");
