@@ -10,6 +10,7 @@ import static yuu.tube.Search.*;
 public class UserOps {
     static int subs=0, vids=0;
     
+    //method to enter user profile, display actions for user
     public static void userProfile(){
         Scanner s = new Scanner(System.in);
         Video a=new Video();
@@ -62,6 +63,7 @@ public class UserOps {
         }
     }
     
+    //method for user settings, display personal actions for user
     public static void userSettings(){
         Scanner s = new Scanner(System.in);
         Video a=new Video();
@@ -100,6 +102,7 @@ public class UserOps {
         }
     }
     
+    //method to change user email
     public static void changeEmail(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your password: ");
@@ -119,6 +122,7 @@ public class UserOps {
             }
     }
     
+    //method to changer user password
     public static void changePassword(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your email: ");
@@ -138,6 +142,7 @@ public class UserOps {
             }
     } 
     
+    //method to change username
     public static void changeUsername(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your password: ");
@@ -157,6 +162,7 @@ public class UserOps {
             }
     }
     
+    //method to delete user account
     public static void deleteAccount(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter your email: ");
@@ -173,6 +179,7 @@ public class UserOps {
             }
     }
     
+    //method to like a video, then update to db
     public static void likeVid(){
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
@@ -180,6 +187,8 @@ public class UserOps {
         PreparedStatement st = null; 
         ResultSet rs = null;
         conn = connection.getConnection();
+        
+        //fetch the initial number of likes of the vid from db
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st=MyConnection.getConnection().prepareStatement(SQL);
@@ -191,7 +200,8 @@ public class UserOps {
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
-                
+        
+        //plus 1 and update number of likes of vid into the db
         try{
             String SQL2="UPDATE videostats "+"SET likes = ?"+"WHERE title = ?";
             st=MyConnection.getConnection().prepareStatement(SQL2);
@@ -204,6 +214,7 @@ public class UserOps {
         showVidStats();
     }
     
+    //method to dislike a video, then update to db
     public static void dislikeVid(){
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
@@ -211,6 +222,8 @@ public class UserOps {
         PreparedStatement st = null;
         ResultSet rs = null;
         conn = connection.getConnection();
+        
+        //fetch the initial number of dislikes of the vid from db
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st=MyConnection.getConnection().prepareStatement(SQL);
@@ -223,6 +236,7 @@ public class UserOps {
             System.out.println("Error updating to database");
             }
         
+        //plus 1 and update number of dislikes of vid into the db
         try{
             String SQL2="UPDATE videostats "+"SET dislikes = ?"+"WHERE title = ?";
             st=MyConnection.getConnection().prepareStatement(SQL2);
@@ -235,12 +249,15 @@ public class UserOps {
         showVidStats();
     }
     
+    //method to show the statistics of a video
     public static void showVidStats(){
         MyConnection connection=new MyConnection();
         Connection conn = null; 
         PreparedStatement st = null; 
         ResultSet rs = null;
         conn = connection.getConnection();
+        
+        //fetch the statistics of a video from the db
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st = conn.prepareStatement(SQL); 
@@ -263,6 +280,7 @@ public class UserOps {
             }
     }
     
+    //method to subscribe to a user
     public static void subscribeUser(){
         int rowsAffected=0;
         MyConnection connection=new MyConnection();
@@ -270,6 +288,8 @@ public class UserOps {
         PreparedStatement st = null; 
         ResultSet rs = null;
         conn = connection.getConnection();
+        
+        //fetch the number of subscriber of selected user
         try{
             String SQL="SELECT * FROM public.credentials WHERE username=?";
             st=MyConnection.getConnection().prepareStatement(SQL);
@@ -282,6 +302,7 @@ public class UserOps {
             System.out.println("Error updating to database");
             }
         
+        //plus 1 and update the subscriber count of the user
         try{
             String SQL="UPDATE credentials "+"SET subscriberscount = ?"+"WHERE username = ?";
             st=MyConnection.getConnection().prepareStatement(SQL);
@@ -293,6 +314,7 @@ public class UserOps {
             }
     }
     
+    //method to comment on a vid
     public static void commentVid(){
         Scanner s=new Scanner(System.in);
         int rowsAffected=0;
@@ -302,6 +324,7 @@ public class UserOps {
         conn = connection.getConnection();
         System.out.print("Enter your comment: ");
         vidComments=s.nextLine();
+        //update the comment in the db
         try{
             String SQL2="UPDATE videostats "+"SET comments = ?"+"WHERE title = ?";
             st=MyConnection.getConnection().prepareStatement(SQL2);
@@ -312,9 +335,5 @@ public class UserOps {
             System.out.println("Error updating to database");
             }
         showVidStats();
-    }
-    
-    public static void showUserStats(){
-        
     }
 }

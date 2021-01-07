@@ -15,7 +15,6 @@ public class YuuTube {
         
         main:
         while(status){
-            //System.out.println("\nWELCOME TO YUUTUBE");
             System.out.println("");
             System.out.println("****   ****  ****  ****  ****  ****  ************  ****  ****  *******    ************");
             System.out.println(" *  * *  *   *  *  *  *  *  *  *  *  *****  *****  *  *  *  *  *  * *  *  *  *********");
