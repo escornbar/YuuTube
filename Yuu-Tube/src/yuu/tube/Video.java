@@ -31,7 +31,8 @@ public class Video {
         if(!f.exists()){
             f.mkdir();
         }
-            
+         
+        //display guide to upload and prompt user for needed details
         final int BUFFERSIZE = 4 * 1024;
         Scanner s = new Scanner(System.in);
         System.out.println("\n--VIDEO UPLOAD GUIDE--");
@@ -45,6 +46,7 @@ public class Video {
         System.out.print("Enter video title: ");
         vidTitle=s.nextLine();
         
+        //upload the video
         try(
             FileInputStream fin = new FileInputStream(new File(sourceFilePath + "/" + outputFilePath));
             FileOutputStream fout = new FileOutputStream(new File(fileDestination + outputFilePath));
@@ -61,6 +63,7 @@ public class Video {
             flag1=false;
             }
         
+        //if upload successful, the details will uploaded to the db
         if(flag1==true){
         PreparedStatement st;
         MyConnection connection=new MyConnection();
@@ -81,6 +84,7 @@ public class Video {
             System.out.println("Error in uploading to database");
             }
         
+        //fetch the initial videos uploaded of a user from the db
         try{
             String SQL2="SELECT * FROM public.credentials WHERE username=?";
             st=MyConnection.getConnection().prepareStatement(SQL2);
@@ -93,6 +97,7 @@ public class Video {
             System.out.println("Error updating to database");
             }
         
+        //update the number of videos uploaded into the db
         try{
             String SQL3="UPDATE credentials "+"SET videoscount = ?"+"WHERE username = ?";
             st=MyConnection.getConnection().prepareStatement(SQL3);
@@ -113,6 +118,8 @@ public class Video {
         PreparedStatement st = null; 
         ResultSet rs = null;
         conn = connection.getConnection();
+        
+        //fetch the number of views of a video from db
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st=MyConnection.getConnection().prepareStatement(SQL);
@@ -120,11 +127,11 @@ public class Video {
             rs=st.executeQuery();
             if(rs.next()){
                 vidViews=rs.getInt("views");}
-            //rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
             }
         
+        //update the number of views into the db
         try{
             String SQL="UPDATE videostats "+"SET views = ?"+"WHERE title = ?";
             st=MyConnection.getConnection().prepareStatement(SQL);
@@ -135,6 +142,7 @@ public class Video {
             System.out.println("Error updating to database");
             }
         
+        //fetch the filename from db and play video
         try{
             String SQL="SELECT * FROM public.videostats WHERE title=?";
             st = conn.prepareStatement(SQL);

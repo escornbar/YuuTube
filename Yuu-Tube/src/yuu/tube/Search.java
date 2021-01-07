@@ -9,6 +9,7 @@ import static yuu.tube.UserOps.*;
 public class Search {
     static String username1;
     
+    //method to search vid, it will also display matching titles
     public static void searchVid(){
         Scanner s=new Scanner(System.in);
         System.out.print("Search: ");
@@ -47,6 +48,7 @@ public class Search {
         chosenVid(option);
     }
     
+    //method to choose vid after search, then display actions for chosen video
     public static void chosenVid(String title){
         Scanner s=new Scanner(System.in);
         MyConnection connection=new MyConnection();
@@ -94,6 +96,7 @@ public class Search {
             }
     }
     
+    //method to search for channel, also display option to subscribe
     public static void searchChannel(){
         Scanner s=new Scanner(System.in);
         System.out.print("Enter channel name: ");
