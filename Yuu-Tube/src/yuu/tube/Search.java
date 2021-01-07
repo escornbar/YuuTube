@@ -24,7 +24,7 @@ public class Search {
             st = conn.prepareStatement(SQL); 
             st.setString(1, "%"+vidTitle+"%");
             rs = st.executeQuery();
-            for(int i=0;i<5;i++){
+            for(int i=0;i<6;i++){
                 if  (rs.next()) {
                     System.out.println("");
                     System.out.println(i+1+".");
