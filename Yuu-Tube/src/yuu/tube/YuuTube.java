@@ -25,7 +25,7 @@ public class YuuTube {
             System.out.println("    * *      *  ****  *  *  ****  *      *  *      *  ****  *  *  * *  *  *  *********");
             System.out.println("    ***      **********  **********      ****      **********  *******    ************");
             trendingVideos();
-            System.out.println("\n[1] Login\n[2] Register for an account\n[3] Quit");
+            System.out.println("[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
             int userchoiceMain=s.nextInt();
             switch(userchoiceMain){
