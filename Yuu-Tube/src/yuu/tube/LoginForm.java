@@ -141,6 +141,7 @@ public class LoginForm extends javax.swing.JFrame {
             if(rs.next()){
                 username=rs.getString("username");
                 JOptionPane.showMessageDialog(null,"Login Successful\nWelcome back "+username+"!");
+                this.dispose();
             }
             else{
                 JOptionPane.showMessageDialog(null,"Wrong email or password entered");
