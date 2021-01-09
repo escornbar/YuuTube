@@ -101,9 +101,7 @@ public class PlayTrendingVids {
 
             case 3:
                 try{
-                    String SQL = "SELECT * FROM public.videostats WHERE views="
-                                 +"(SELECT MIN(views) FROM public.videostats WHERE views IN "
-                                 +"(SELECT TOP 3 views FROM public.videostats ORDER BY views DESC))";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY DESC views LIMIT 2,1";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
@@ -120,9 +118,7 @@ public class PlayTrendingVids {
 
             case 4:
                 try{
-                    String SQL = "SELECT * FROM public.videostats WHERE views="
-                                 +"(SELECT MIN(views) FROM public.videostats WHERE views IN "
-                                 +"(SELECT TOP 4 views FROM public.videostats ORDER BY views DESC))";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY DESC views LIMIT 3,1";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
@@ -139,9 +135,7 @@ public class PlayTrendingVids {
                 
             case 5:
                 try{
-                    String SQL = "SELECT * FROM public.videostats WHERE views="
-                                 +"(SELECT MIN(views) FROM public.videostats WHERE views IN "
-                                 +"(SELECT TOP 5 views FROM public.videostats ORDER BY views DESC))";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY DESC views LIMIT 4,1";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
@@ -157,12 +151,13 @@ public class PlayTrendingVids {
                 break;    
 
             default:
-            System.out.println("Invalid input");
-            break;
-            }
+                System.out.println("Invalid input");
+                break;
+        }
     }
     
 }
+
 
 
 
