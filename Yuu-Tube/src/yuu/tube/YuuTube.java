@@ -24,7 +24,7 @@ public class YuuTube {
             System.out.println("    * *      *  *  *  *  *  *  *  *      *  *      *  *  *  *  *  * *  *  *  *");
             System.out.println("    * *      *  ****  *  *  ****  *      *  *      *  ****  *  *  * *  *  *  *********");
             System.out.println("    ***      **********  **********      ****      **********  *******    ************");
-            trendingVideos();
+            //trendingVideos();
             System.out.println("[1] Login\n[2] Register for an account\n[3] Quit");
             System.out.print("What do you want to do today: ");
             int userchoiceMain=s.nextInt();
@@ -67,10 +67,11 @@ public class YuuTube {
     public static void home(){
         Scanner s = new Scanner(System.in);
         boolean status=true;
+        trendingVideos();
         main:
         while(status){
             System.out.println("\n--HOME--");
-            System.out.println("[1] User Profile\n[2] Search a Video\n[3] Search a Channel\n[4] Logout");
+            System.out.println("[1] User Profile\n[2] Search a Video\n[3] Search a Channel\n[4] Play Trending Video\n[5] Logout");
             System.out.print("What do you want to do today: ");
             int userchoiceHome=s.nextInt();
             home:
@@ -88,6 +89,10 @@ public class YuuTube {
                     break;
                 
                 case 4:
+                    playTrendingVids();
+                    break;
+                
+                case 5:
                     System.out.println("See you later, "+username+"!");
                     break main;
                     

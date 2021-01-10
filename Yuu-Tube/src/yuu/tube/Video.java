@@ -13,7 +13,7 @@ public class Video {
     static int vidLikes, vidDislikes;
     static String vidComments;
     static int vidViews;
-    private static String fileDestination = "C:\\Video Files\\";
+    final static String fileDestination = "C:\\Video Files\\";
 
     public Video() {
         this.vidLikes=0;
