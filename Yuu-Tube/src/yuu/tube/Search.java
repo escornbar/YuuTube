@@ -115,11 +115,37 @@ public class Search {
             if  (rs.next()) {
                 System.out.println("");
                 String uname = rs.getString("username");
-                int subscribers = rs.getInt("subscriberscount");
-                int videos = rs.getInt("videoscount");
+                int subscount = rs.getInt("subscriberscount");
+                int vidscount = rs.getInt("videoscount");
                 System.out.println("Channel: "+uname+
-                                   "\nSubscribers: "+subscribers+
-                                   "\nVideos: "+videos);
+                                   "\nSubscribers: "+subscount+
+                                   "\nVideos: "+vidscount+
+                                   "\nBadges: ");
+                if(subscount>=100000000){
+                        System.out.println("People Favourite Diamond");
+                    }else if(subscount>=10000000){
+                        System.out.println("People Favourite Platinum");
+                    }else if(subscount>=1000000){
+                        System.out.println("People Favourite Gold");
+                    }else if(subscount>=500000){
+                        System.out.println("People Favourite Silver");
+                    }else if(subscount>=100000){
+                        System.out.println("People Favourite Bronze");
+                    }else{
+                        System.out.println("No badges earned");
+                    }
+                
+                    if(vidscount>=5000){
+                        System.out.println("Content Creator Diamond");
+                    }else if(vidscount>=1000){
+                        System.out.println("Content Creator Platinum");
+                    }else if(vidscount>=100){
+                        System.out.println("Content Creator Gold");
+                    }else if(vidscount>=50){
+                        System.out.println("Content Creator Silver");
+                    }else if(vidscount>=10){
+                        System.out.println("Content Creator Bronze");
+                    }
                 subscribe:
                 while(status){
                     System.out.println("\n[1] Subscribe\n[2] Back to home");
@@ -134,6 +160,7 @@ public class Search {
                             System.out.println("Invalid input");
                     }
                 }
+                System.out.println("");
             } else{
                 System.out.println("Cannot find channel");
             }

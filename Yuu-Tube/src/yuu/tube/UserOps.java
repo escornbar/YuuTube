@@ -33,12 +33,38 @@ public class UserOps {
                     int vidscount = rs.getInt("videoscount");
                     System.out.println("Username: "+username+
                                        "\nSubscribers: "+subscount+
-                                       "\nVideos: "+vidscount);
+                                       "\nVideos: "+vidscount+
+                                       "\nBadges: ");
+                    if(subscount>=100000000){
+                        System.out.println("People Favourite Diamond");
+                    }else if(subscount>=10000000){
+                        System.out.println("People Favourite Platinum");
+                    }else if(subscount>=1000000){
+                        System.out.println("People Favourite Gold");
+                    }else if(subscount>=500000){
+                        System.out.println("People Favourite Silver");
+                    }else if(subscount>=100000){
+                        System.out.println("People Favourite Bronze");
+                    }else{
+                        System.out.println("No badges earned");
+                    }
+                
+                    if(vidscount>=5000){
+                        System.out.println("Content Creator Diamond");
+                    }else if(vidscount>=1000){
+                        System.out.println("Content Creator Platinum");
+                    }else if(vidscount>=100){
+                        System.out.println("Content Creator Gold");
+                    }else if(vidscount>=50){
+                        System.out.println("Content Creator Silver");
+                    }else if(vidscount>=10){
+                        System.out.println("Content Creator Bronze");
+                    }
                 } 
             } catch (SQLException ex) {
                 Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            System.out.println("[1] Upload Video\n[2] Delete Video\n[3] User Settings\n[4] Return to home");
+            System.out.println("\n[1] Upload Video\n[2] Delete Video\n[3] User Settings\n[4] Return to home");
             System.out.print("What do you want to do today: ");
             int userchoice3=s.nextInt();
             switch(userchoice3){
