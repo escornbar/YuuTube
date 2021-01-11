@@ -6,6 +6,7 @@ import java.util.logging.*;
 import static yuu.tube.Video.*;
 import static yuu.tube.RegisterForm.*;
 import static yuu.tube.Search.*;
+import static yuu.tube.YuuTube.*;
 
 public class UserOps {
     static int subs=0, vids=0;
@@ -119,6 +120,8 @@ public class UserOps {
                     }else{
                         break;
                     }
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid input");
             }
@@ -136,12 +139,12 @@ public class UserOps {
         System.out.print("Enter your new email: ");
         String email=s.nextLine();
         PreparedStatement st;
-        String SQL="UPDATE credentials "+"SET email = ?"+"WHERE password = ?";
+        String SQL="UPDATE credentials "+"SET email = ?"+"WHERE username = ?";
         int rowsAffected=0;
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             st.setString(1, email);
-            st.setString(2, password);
+            st.setString(2, username);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
@@ -176,12 +179,12 @@ public class UserOps {
         System.out.print("Enter your new username: ");
         String username=s.nextLine();
         PreparedStatement st;
-        String SQL="UPDATE credentials "+"SET username = ?"+"WHERE password = ?";
+        String SQL="UPDATE credentials "+"SET username = ?"+"WHERE username = ?";
         int rowsAffected=0;
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             st.setString(1, username);
-            st.setString(2, password);
+            st.setString(2, RegisterForm.username);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
