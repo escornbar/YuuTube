@@ -6,6 +6,7 @@ import java.util.logging.*;
 import static yuu.tube.Video.*;
 import static yuu.tube.RegisterForm.*;
 import static yuu.tube.Search.*;
+import static yuu.tube.YuuTube.*;
 
 public class UserOps {
     static int subs=0, vids=0;
@@ -119,6 +120,8 @@ public class UserOps {
                     }else{
                         break;
                     }
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid input");
             }
@@ -141,7 +144,6 @@ public class UserOps {
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             st.setString(1, email);
-            //st.setString(2, password);
             st.setString(2, username);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
