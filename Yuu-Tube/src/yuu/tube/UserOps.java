@@ -136,12 +136,13 @@ public class UserOps {
         System.out.print("Enter your new email: ");
         String email=s.nextLine();
         PreparedStatement st;
-        String SQL="UPDATE credentials "+"SET email = ?"+"WHERE password = ?";
+        String SQL="UPDATE credentials "+"SET email = ?"+"WHERE username = ?";
         int rowsAffected=0;
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             st.setString(1, email);
-            st.setString(2, password);
+            //st.setString(2, password);
+            st.setString(2, username);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
@@ -176,12 +177,12 @@ public class UserOps {
         System.out.print("Enter your new username: ");
         String username=s.nextLine();
         PreparedStatement st;
-        String SQL="UPDATE credentials "+"SET username = ?"+"WHERE password = ?";
+        String SQL="UPDATE credentials "+"SET username = ?"+"WHERE username = ?";
         int rowsAffected=0;
         try{
             st=MyConnection.getConnection().prepareStatement(SQL);
             st.setString(1, username);
-            st.setString(2, password);
+            st.setString(2, RegisterForm.username);
             rowsAffected = st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error updating to database");
