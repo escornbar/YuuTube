@@ -99,7 +99,7 @@ public class Trending {
                 
             case 2:
                 try{
-                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 2 OFFSET 1";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 1 OFFSET 1";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
@@ -140,7 +140,7 @@ public class Trending {
 
             case 3:
                 try{
-                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 3 OFFSET 2";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 1 OFFSET 2";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
@@ -181,7 +181,7 @@ public class Trending {
 
             case 4:
                 try{
-                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 4 OFFSET 3";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 1 OFFSET 3";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
@@ -222,7 +222,7 @@ public class Trending {
                 
             case 5:
                 try{
-                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 5 OFFSET 4";
+                    String SQL = "SELECT * FROM public.videostats ORDER BY views DESC LIMIT 1 OFFSET 4";
                     st = conn.prepareStatement(SQL);
                     rs = st.executeQuery();
                     if(rs.next()) {
