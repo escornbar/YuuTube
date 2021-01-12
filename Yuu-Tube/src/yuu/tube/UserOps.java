@@ -112,15 +112,15 @@ public class UserOps {
                     changeUsername();
                     break;
                 case 4:
-                    System.out.print("\n[1] Yes\n[Any key] Cancel\nAre you sure to delete your account?: ");
+                    System.out.print("\n[1] Yes\n[2] Cancel\nAre you sure to delete your account?: ");
                     int c=s.nextInt();
                     if(c==1){
                         deleteAccount();
                         System.out.println("Account deleted");
-                    }else{
+                        System.exit(0);
+                    }else if(c==2){
                         break;
                     }
-                    System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid input");
